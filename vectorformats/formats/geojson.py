@@ -6,10 +6,10 @@ try:
     from cjson import decode as json_loads
 except:
     try:
-        from simplejson import dumps as json_dumps
-        from simplejson import loads as json_loads
+        from json import dumps as json_dumps
+        from json import loads as json_loads
     except Exception, E:
-        raise Exception("simplejson is required for using the GeoJSON service. (Import failed: %s)" % E)
+        raise Exception("json is required for using the GeoJSON service. (Import failed: %s)" % E)
 
 
 class GeoJSON(Format):
@@ -54,7 +54,7 @@ class GeoJSON(Format):
             data = self.encode_feature(feature)
             for key,value in data['properties'].items():
                 if value and isinstance(value, str): 
-                    data['properties'][key] = unicode(value,"utf-8")
+                    data['properties'][key] = value.encode('utf-8')
             results.append(data)
         
         result_data = {
